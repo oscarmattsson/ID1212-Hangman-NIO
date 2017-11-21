@@ -1,4 +1,4 @@
-package oscarmat.kth.id1212.client.controller;
+package oscarmat.kth.id1212.client.controller.GUI;
 
-public class GameController {
+public class GameGUIController {
 }
