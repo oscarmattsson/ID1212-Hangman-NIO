@@ -1,0 +1,142 @@
+Title: Hangman-NIO Game Transfer Protocol
+Author: Oscar Mattsson
+E-mail: oscarmat@kth.se
+Version: 1.0
+
+This document describes the protocol used to communicate between CLIENT and
+SERVER in the Hangman-NIO game.
+
+For syntax descriptions in this document, words by themselves are mandatory
+syntax elements. Words wrapped in "[]" are optional. Words wrapped in "<>" are
+placeholders for commands or data structures. Pipe-separated ("|") values
+wrapped in "()" indicate either one of the values may be used.
+  For more generic structures, BNF syntax is used in conjunction with the rules
+stated above.
+
+--- INDEX ---
+1. Message
+2. Headers
+    2.1 Message Length
+    2.2 Message Type
+        2.2.1 REQUEST
+        2.2.2 REPLY
+        2.2.3 BROADCAST
+        2.2.4 TERMINATE
+3. States
+    3.1 INIT
+        3.1.1 ALIAS
+    3.2 PLAYING
+        3.2.1
+    3.3 ENDED
+4. Examples
+    4.1 Start a new session
+    4.2 Guess a letter
+    4.3 Receive leaderboard
+    4.4 Terminate connection
+
+--- 1. Message ---
+Each message consists of two parts; the header, and the actual data. The header
+contains metadata such as how much data is being sent and what type of data is
+being sent. A separator of three hash signs "###" is used to separate header
+from data. The header is explained in detail in section 2.
+  The data is a JSON-formatted string with two mandatory fields; type and msg.
+The type refers to the action type as described in section 3. The msg field
+contains the data related to that action. For REPLY messages (see 2.2.2), an
+additional field status is required. If the ok field of the status is set to
+false, this is equivalent to an exception having been thrown as a result of a
+REQUEST message (see 2.2.1).
+  A TERMINATE message is a special case which will ignore the data part if it
+exists, making it redundant.
+    - BNF Syntax: <message> ::= <header> "###" <data>
+    - <data> Syntax:
+        {
+            type: <action-type>,
+            msg: <JSON-message>,
+            [status: { ok: (true|false), msg: <error-message> }]
+        }
+
+--- 2. HEADERS ---
+Each message starts with a header. The header consists of a sequence of fields,
+which are described in the subsections of this chapter.
+    - BNF Syntax: <header> ::= <header-fields>
+        <header-fields> ::= <header-field> "," <header-fields> | <header-field>
+        <header-field> ::= <field-name> ":" <field-value>
+
+--- 2.1 Message Length ---
+The message length indicates how many bytes of data the receiver should expect
+to see before the message is complete. This value should not include the length
+of the header.
+    - Syntax: LENGTH:<message-length>
+    - <message-length>: The length of the message, header excluded.
+
+--- 2.2 Message Type ---
+The message type indicates how a message should be handled and more importantly
+whether or not the sender should expect a message in return.
+    - Syntax: TYPE:<message-type>
+    - <message-type>: One of the types described in the subsections of 2.2.
+
+--- 2.2.1 REQUEST ---
+    - Syntax: REQUEST
+    - Description: A REQUEST message is sent by a CLIENT to request an operation
+        on the SERVER. After the operation is complete, the SERVER should send a
+        REPLY message back to the CLIENT.
+
+--- 2.2.2 REPLY ---
+    - Syntax: REPLY
+    - Description: A REPLY message is sent by the SERVER in response to a
+        REQUEST message from a CLIENT. This message does not require a response.
+
+--- 2.2.3 BROADCAST ---
+    - Syntax: BROADCAST
+    - Description: A BROADCAST message is sent by the SERVER to ALL CLIENTS
+        connected to that SERVER. This message does not require a response.
+
+--- 2.2.4 TERMINATE ---
+    - Syntax: TERMINATE
+    - Description: A TERMINATE message is sent either from a CLIENT to the
+        SERVER or from the SERVER to the CLIENT. The TERMINATE message indicates
+        the SENDER is terminating their connection, and puts the connection in
+        the ENDED state (see section 3.3). This message does not require a
+        response, nor does it require any additional data to be sent with it.
+
+--- 3. States ---
+The lifecycle of the connection between a CLIENT and a SERVER has three
+different states. These states are INIT, PLAYING and ENDED. Each of these states
+have their own set of available actions to decide which messages are valid for
+that particular state.
+
+--- 3.1 INIT ---
+When a CLIENT connects to a SERVER, the connection is in the INIT state. At this
+point the SERVER is waiting for information about the user of the CLIENT to set
+up the session for the connection.
+
+    - Allowed messages:
+        * (REQUEST|REPLY):ALIAS
+        * TERMINATE
+
+--- 3.1.1 ALIAS ---
+The CLIENT sends a REQUEST message with the desired alias to the SERVER. This
+either starts a new session bound to that alias, or picks up an old session
+bound to that alias. The SERVER sends a REPLY message with the current state of
+the session.
+  If the ALIAS message is successful, the state of the connection will move from
+INIT to PLAYING.
+    - Request Syntax:
+        LENGTH:<message-length>,TYPE:REQUEST###{
+            type: ALIAS,
+            msg: { name: <alias> }
+        }
+    - Reply Syntax:
+        LENGTH:<message-length>,TYPE:REPLY###{
+            type: ALIAS,
+            msg: <session-state>
+            status: { ok: <ok-status>[, msg: <error-message>] }
+        }
+
+--- 3.1.2 TERMINATE ---
+A TERMINATE message will move the state of the connection directly from INIT to
+ENDED.
+    - Syntax: LENGTH:0,TYPE:TERMINATE###
+
+--- 3.2 PLAYING ---
+
