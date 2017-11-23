@@ -32,11 +32,6 @@ stated above.
     4.2 NEW_GAME
     4.3 PLAY
     4.4 LEADERBOARD
-5. Examples
-    5.1 Start a new session
-    5.2 Guess a letter
-    5.3 Receive leaderboard
-    5.4 Terminate connection
 
 --- 1. Message ---
 Each message consists of two parts; the header, and the actual data. The header
@@ -267,34 +262,3 @@ to all CLIENTs.
                 leaderboard: <Array>
             }
         }
-
---- 5. Examples ---
-Below are some examples of how to use the protocol.
-
---- 5.1 Start a new session ---
-We have connected to the SERVER from the CLIENT and now we want to pass an alias
-to the SERVER so that we can get into the NO_GAME state.
-  The alias we want to use is "Mr. Hangman". This "Mr. Hangman" has played the
-game before and acquired 2 points during his last session. He is now in 2nd
-place on the leaderboard after "Ms. Pac-Man" who has 5 points.
-
-CLIENT:
-LENGTH:58,TYPE:REQUEST###{
-    state: INIT,
-    type: ALIAS,
-    msg: { name: "Mr. Hangman" }
-}
-
-SERVER:
-LENGTH:156,TYPE:REPLY###{
-    state: NO_GAME,
-    type: ALIAS,
-    msg: {
-        name: "Mr Hangman",
-        score: 2, leaderboard: [
-            { name: "Ms. Pac-Man", score: 5 },
-            { name: "Mr. Hangman", score: 2 }
-        ]
-    }
-}
-

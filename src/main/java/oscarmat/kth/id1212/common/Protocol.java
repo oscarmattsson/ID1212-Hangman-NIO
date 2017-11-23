@@ -7,9 +7,35 @@ package oscarmat.kth.id1212.common;
  */
 public class Protocol {
 
-    private static final String SEPARATOR = "###";
-    private static final String NEXT_FIELD = ",";
-    private static final String VALUE = ":";
+    // Header constants
+    static final String HEADER_SEPARATOR = "###";
+    static final String FIELD_SEPARATOR = ",";
+    static final String KEY_VALUE_SEPARATOR = ":";
+
+    // JSON common fields identifiers
+    static final String STATE = "state";
+    static final String TYPE = "type";
+    static final String MSG = "msg";
+    static final String STATUS = "status";
+    static final String STATUS_OK = "ok";
+    static final String STATUS_MSG = "msg";
+
+    // JSON msg field identifiers
+    static final String NAME = "name";
+    static final String SCORE = "score";
+    static final String LEADERBOARD = "leaderboard";
+    static final String GAMESTATE = "gamestate";
+    static final String GUESS = "guess";
+    static final String WIN = "win";
+
+    // JSON gamestate field identifiers
+    static final String GAMESTATE_FAILEDATTEMPTS = "failedAttempts";
+    static final String GAMESTATE_MAXATTEMPTS = "maxAttempts";
+    static final String GAMESTATE_WORDSTATE = "wordState";
+
+    // JSON guess field identifiers
+    static final String GUESS_VALUE = "value";
+    static final String GUESS_CORRECT = "correct";
 
     /**
      * This class only contains constant static fields and does therefore not
@@ -20,7 +46,7 @@ public class Protocol {
     /**
      * Types of header fields can be represented in the header.
      */
-    public enum Header {
+    enum Header {
         LENGTH,
         TYPE
     }
