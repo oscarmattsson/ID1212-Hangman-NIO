@@ -1,4 +1,4 @@
 package oscarmat.kth.id1212.common;
 
-public class MessageType {
+public class MessageParser {
 }

@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="900.0" styleClass="transparent" stylesheets="@assets/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="855.0" layoutY="-9.0" prefHeight="540.0" prefWidth="60.0" styleClass="black-fill" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="840.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="540.0" prefWidth="60.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <ImageView fx:id="exitButton" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@assets/cross.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="exitButton1" disable="true" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@assets/connection.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="exitButton11" disable="true" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@assets/connectioncheck.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="exitButton111" disable="true" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@assets/connectioncross.png" />
+                     </image>
+                  </ImageView>
+                  <ImageView fx:id="exitButton1111" disable="true" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@assets/connectionbreak.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="500.0" prefWidth="830.0" styleClass="black-fill" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <StackPane layoutX="50.0" layoutY="50.0" prefHeight="400.0" prefWidth="350.0" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+               <children>
+                  <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
+                    <items>
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" style="-fx-background-color: #ED6A5A;" styleClass="red-fill" />
+                      <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="white-fill" />
+                    </items>
+                  </SplitPane>
+                  <ImageView fitHeight="400.0" fitWidth="350.0" layoutX="50.0" layoutY="50.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                     <image>
+                        <Image url="@assets/hangman.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </StackPane>
+            <HBox layoutX="459.0" layoutY="368.0" prefHeight="60.0" prefWidth="319.0" spacing="10.0">
+               <children>
+                  <Label styleClass="white-text" text="H" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="A" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="N" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="G" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="   " textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="A" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="white-text" text="N" textFill="#d8dbe2" underline="true">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <FlowPane hgap="10.0" layoutX="441.0" layoutY="50.0" prefHeight="310.0" prefWidth="349.0" vgap="10.0">
+               <children>
+                  <Label styleClass="green-text" text="A" textFill="#ed6a5a">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="red-text" text="B">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="C" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="D" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="E" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="F" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label disable="true" styleClass="green-text" text="G" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="green-text" text="H" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="I" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="J" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="K" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="L" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="M" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="green-text" text="N" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="O" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="red-text" text="P" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="Q" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="R" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="S" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="T" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="red-text" text="U" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="V" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="W" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="X" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="Y" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+                  <Label styleClass="grey-text" text="Z" textFill="#373f51">
+                     <font>
+                        <Font size="44.0" />
+                     </font>
+                  </Label>
+               </children>
+            </FlowPane>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="titlePane" prefHeight="40.0" prefWidth="830.0" styleClass="grey-fill" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="70.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="title" layoutX="14.0" layoutY="7.0" styleClass="white-text" text="Title" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

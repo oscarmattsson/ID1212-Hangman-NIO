@@ -1,0 +1,300 @@
+Title: Hangman-NIO Game Transfer Protocol
+Author: Oscar Mattsson
+E-mail: oscarmat@kth.se
+Version: 1.0
+
+This document describes the protocol used to communicate between CLIENT and
+SERVER in the Hangman-NIO game.
+
+For syntax descriptions in this document, words by themselves are mandatory
+syntax elements. Words wrapped in "[]" are optional. Words wrapped in "<>" are
+placeholders for commands or data structures. Pipe-separated ("|") values
+wrapped in "()" indicate either one of the values may be used.
+  For more generic structures, BNF syntax is used in conjunction with the rules
+stated above.
+
+--- INDEX ---
+1. Message
+2. Headers
+    2.1 Message Length
+    2.2 Message Type
+        2.2.1 REQUEST
+        2.2.2 REPLY
+        2.2.3 BROADCAST
+        2.2.4 TERMINATE
+3. States
+    3.1 INIT
+    3.2 NO_GAME
+    3.3 PLAYING
+    3.4 ENDED
+4. Actions
+    4.1 ALIAS
+    4.2 NEW_GAME
+    4.3 PLAY
+    4.4 LEADERBOARD
+5. Examples
+    5.1 Start a new session
+    5.2 Guess a letter
+    5.3 Receive leaderboard
+    5.4 Terminate connection
+
+--- 1. Message ---
+Each message consists of two parts; the header, and the actual data. The header
+contains metadata such as how much data is being sent and what type of data is
+being sent. A separator of three hash signs "###" is used to separate header
+from data. The header is explained in detail in section 2.
+  The data is a JSON-formatted string. The fields to be included depends on the
+message type and the action type. Action types are explained in detail in
+section 4.
+  A TERMINATE message is a special case which will ignore the data part if it
+exists, making it redundant. See section 2.2.4 for more information.
+    - BNF Syntax: <message> ::= <header> "###" <data>
+
+--- 2. HEADERS ---
+Each message starts with a header. The header consists of a sequence of fields,
+which are described in the subsections of this chapter.
+    - BNF Syntax: <header> ::= <header-fields>
+        <header-fields> ::= <header-field> "," <header-fields> | <header-field>
+        <header-field> ::= <field-name> ":" <field-value>
+
+--- 2.1 Message Length ---
+The message length indicates how many bytes of data the receiver should expect
+to see before the message is complete. This value should not include the length
+of the header.
+    - Syntax: LENGTH:<message-length>
+    - <message-length>: The length of the message, header excluded.
+
+--- 2.2 Message Type ---
+The message type indicates how a message should be handled and more importantly
+whether or not the sender should expect a message in return.
+    - Syntax: TYPE:<message-type>
+    - <message-type>: One of the types described in the subsections of 2.2.
+
+--- 2.2.1 REQUEST ---
+    - Syntax:
+        LENGTH:<message-length>,TYPE:REQUEST###{
+            state: <state>,
+            type: <action-type>[, msg: <action-message>]
+        }
+    - Description: A REQUEST message is sent by a CLIENT to request an operation
+        on the SERVER. After the operation is complete, the SERVER should send a
+        REPLY message back to the CLIENT.
+
+--- 2.2.2 REPLY ---
+    - Syntax:
+        LENGTH:<message-length>,TYPE:REPLY###{
+            state: <state>,
+            type: <action-type>,
+            msg: <return-message>,
+            status: { ok: <ok-status>[, msg: <error-message>] }
+        }
+    - Description: A REPLY message is sent by the SERVER in response to a
+        REQUEST message from a CLIENT. This message does not require a response.
+
+--- 2.2.3 BROADCAST ---
+    - Syntax:
+        LENGTH:<message-length>,TYPE:BROADCAST###{
+            state: <state>,
+            type: <action-type>,
+            msg: <return-message>,
+        }
+    - Description: A BROADCAST message is sent by the SERVER to ALL CLIENTS
+        connected to that SERVER. This message does not require a response.
+
+--- 2.2.4 TERMINATE ---
+    - Syntax:
+        LENGTH:0,TYPE:TERMINATE###
+    - Description: A TERMINATE message is sent either from a CLIENT to the
+        SERVER or from the SERVER to the CLIENT. The TERMINATE message indicates
+        the SENDER is terminating their connection, and puts the connection in
+        the ENDED state (see section 3.4). This message does not require a
+        response, nor does it require any additional data to be sent with it.
+
+--- 3. States ---
+The lifecycle of the connection between a CLIENT and a SERVER has four
+different states. These states are INIT, PLAYING, NO_GAME and ENDED. Each of
+these states have their own set of available actions to decide which messages
+are valid for that particular state. See section 4 for more information about
+actions.
+
+--- 3.1 INIT ---
+When a CLIENT connects to a SERVER, the connection is in the INIT state. At this
+point the SERVER is waiting for information about the user of the CLIENT to set
+up the session for the connection.
+    - Allowed messages:
+        * (REQUEST|REPLY):ALIAS
+        * TERMINATE
+
+--- 3.2 NO_GAME ---
+The NO_GAME state signifies that there is currently no active game.
+  Once an alias for the CLIENT has been assigned to the session, the connection
+moves into the NO_GAME state, where no game has been started yet. The NO_GAME
+state can also be reached from the PLAYING state when a game is finished,
+making the old game instance obsolete.
+    - Allowed messages:
+        * (REQUEST|REPLY):NEW_GAME
+        * BROADCAST:LEADERBOARD
+        * TERMINATE
+
+--- 3.3 PLAYING ---
+When an active game instance exists, the connection is in the PLAYING state.
+Once this game instance completes (game is lost/won), the state of the
+connection goes from PLAYING to NO_GAME.
+    - Allowed messages:
+        * (REQUEST|REPLY):NEW_GAME
+        * (REQUEST|REPLY):PLAY
+        * BROADCAST:LEADERBOARD
+        * TERMINATE
+
+--- 3.4 ENDED ---
+When a TERMINATE message is sent, the state of the connection becomes ENDED,
+no matter which state the connection was in before. When the connection is in
+the ENDED state, both SERVER and CLIENT should close their connections to each
+other.
+    - No allowed messages.
+
+--- 4. Actions ---
+Actions describe what the receiving party is expected to do when a message is
+received.
+
+--- 4.1 ALIAS ---
+The CLIENT sends a REQUEST message with the desired alias to the SERVER. This
+either starts a new session bound to that alias, or picks up an old session
+bound to that alias. The SERVER sends a REPLY message with the current state of
+the session.
+  If the ALIAS message is successful, the state of the connection will move from
+INIT to NO_GAME.
+    - States: INIT
+    - Request Syntax:
+        LENGTH:<message-length>,TYPE:REQUEST###{
+            state:INIT,
+            type: ALIAS,
+            msg: { name: <String> }
+        }
+    - Reply Syntax:
+        LENGTH:<message-length>,TYPE:REPLY###{
+            type: (INIT|NO_GAME),
+            msg: {
+                name: <String>,
+                score: <Integer>,
+                leaderboard: <Array>
+            },
+            status: { ok: <Boolean>[, msg: <error-message>] }
+
+ --- 4.2 NEW_GAME ---
+The CLIENT sends a REQUEST message to the SERVER with the NEW_GAME action.
+This causes the SERVER to start a new game session and return the state of that
+session in a REPLY message to the CLIENT.
+  If the NEW_GAME message is successful, the state of the connection will move
+from NO_GAME to PLAYING.
+    - States: NO_GAME, PLAYING
+    - Request Syntax:
+        LENGTH:<message-length>,TYPE:REQUEST###{
+            type: NEW_GAME
+        }
+    - Reply Syntax:
+        LENGTH:<message-length>,TYPE:REPLY###{
+            state: (NO_GAME|PLAYING),
+            type: NEW_GAME,
+            msg: {
+                gamestate: {
+                    failedAttempts: <Integer>,
+                    maxAttempts: <Integer>,
+                    wordState: <String>
+                }
+            },
+            status: { ok: <Boolean>[, msg: <error-message>] }
+       }
+
+--- 4.3 PLAY ---
+The CLIENT sends a REQUEST message to the SERVER with the PLAY action. This
+causes the SERVER to perform a move on behalf of the CLIENT in the active game
+session.
+  If the PLAY message causes the game to be either lost or won, the game session
+is over and the state of the connection will move from PLAYING to NO_GAME.
+    - States: PLAYING
+    - Request Syntax:
+        LENGTH:<message-length>,TYPE:REQUEST###{
+            state: PLAYING,
+            type: PLAY,
+            msg: {
+                guess: <String>
+            }
+        }
+    - Reply Syntax (game not over):
+        LENGTH:<message-length>,TYPE:REPLY###{
+            state: PLAYING,
+            type: PLAY,
+            msg: {
+                guess: {
+                    value: <String>,
+                    correct: <Boolean>
+                },
+                gamestate: {
+                    failedAttempts: <Integer>,
+                    maxAttempts: <Integer>,
+                    wordState: <String>
+                }
+            },
+            status: { ok: <Boolean>[, msg: <error-message>] }
+        }
+    - Reply Syntax (game over):
+        LENGTH:<message-length>,TYPE:REPLY###{
+            state: NO_GAME,
+            type: PLAY,
+            msg: {
+                score: <Integer>,
+                win: <Boolean>
+                gamestate: {
+                    failedAttempts: <Integer>,
+                    maxAttempts: <Integer>,
+                    wordState: <String>
+                }
+            },
+            status: { ok: <Boolean>[, msg: <error-message>] }
+        }
+
+--- 4.4 LEADERBOARD ---
+When a game is ended, that CLIENT's score is updated and so the leaderboard is
+updated. When this happens, the SERVER should BROADCAST the updated leaderboard
+to all CLIENTs.
+    - States: NO_GAME, PLAYING
+    - Syntax:
+        LENGTH:<message-length>,TYPE:BROADCAST###{
+            state: (NO_GAME|PLAYING),
+            type: LEADERBOARD,
+            msg: {
+                leaderboard: <Array>
+            }
+        }
+
+--- 5. Examples ---
+Below are some examples of how to use the protocol.
+
+--- 5.1 Start a new session ---
+We have connected to the SERVER from the CLIENT and now we want to pass an alias
+to the SERVER so that we can get into the NO_GAME state.
+  The alias we want to use is "Mr. Hangman". This "Mr. Hangman" has played the
+game before and acquired 2 points during his last session. He is now in 2nd
+place on the leaderboard after "Ms. Pac-Man" who has 5 points.
+
+CLIENT:
+LENGTH:58,TYPE:REQUEST###{
+    state: INIT,
+    type: ALIAS,
+    msg: { name: "Mr. Hangman" }
+}
+
+SERVER:
+LENGTH:156,TYPE:REPLY###{
+    state: NO_GAME,
+    type: ALIAS,
+    msg: {
+        name: "Mr Hangman",
+        score: 2, leaderboard: [
+            { name: "Ms. Pac-Man", score: 5 },
+            { name: "Mr. Hangman", score: 2 }
+        ]
+    }
+}
+
