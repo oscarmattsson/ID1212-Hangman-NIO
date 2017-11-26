@@ -9,6 +9,7 @@ import javax.json.JsonObject;
 import java.io.IOException;
 import java.io.UncheckedIOException;
 import java.nio.ByteBuffer;
+import java.nio.channels.SelectionKey;
 import java.nio.channels.SocketChannel;
 import java.util.concurrent.ForkJoinPool;
 
@@ -82,7 +83,9 @@ class ClientHandler implements MessageListener, Runnable {
                 terminateConnection();
                 return;
         }
-        Message.build(Protocol.MessageType.REPLY, replyData, id);
+        outgoing.addMessage(Message.build(Protocol.MessageType.REPLY, replyData, id));
+        channel.keyFor(server.getSelector()).interestOps(SelectionKey.OP_WRITE);
+        server.getSelector().wakeup();
     }
 
     private JsonObject handleInit(Message.Data data) {

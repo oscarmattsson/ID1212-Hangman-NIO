@@ -59,6 +59,7 @@ public class ClientController {
                 score--;
             case NO_GAME:
                 game = new Game(wordList);
+                state = SessionState.PLAYING;
                 break;
             default:
                 throw new IllegalStateException();
@@ -92,6 +93,7 @@ public class ClientController {
             }
             else {
                 boolean win = game.isGameWon();
+                state = SessionState.NO_GAME;
                 return ReplyBuilder.playGameOver(
                         state,
                         failedAttempts,

@@ -68,10 +68,12 @@ public class GameScene extends CustomComponent {
         }
 
         wordLetters.clear();
+        wordPane.getChildren().clear();
         try {
             for (int i = 0; i < word.length(); i++) {
                 WordLetter letter = new WordLetter();
                 wordLetters.add(letter);
+                wordPane.getChildren().add(letter);
             }
         }
         catch (IOException e) {

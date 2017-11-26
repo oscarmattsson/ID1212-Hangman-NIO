@@ -147,7 +147,10 @@ public class GameServer implements Runnable {
             logger.putError(name, "Error reading from client, closing connection.");
             terminateClient((SocketChannel)key.channel());
         }
-        key.interestOps(SelectionKey.OP_WRITE);
+    }
+
+    Selector getSelector() {
+        return selector;
     }
 
     private void writeToClient(SelectionKey key) {

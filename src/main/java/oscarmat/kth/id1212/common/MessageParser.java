@@ -41,6 +41,7 @@ class MessageParser {
                     break;
                 case ID:
                     id = value;
+                    break;
                 default:
                     throw new IOException(message);
             }
