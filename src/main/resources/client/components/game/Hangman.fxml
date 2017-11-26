@@ -1,14 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.image.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.*?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="$CONTROLLER_NAME$"
-            prefHeight="400.0" prefWidth="600.0">
-
-</AnchorPane>
+<fx:root prefHeight="420.0" prefWidth="370.0" stylesheets="@../../../assets/style.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <StackPane prefHeight="420.0" prefWidth="370.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <SplitPane fx:id="progressSlider" dividerPositions="0.5" focusTraversable="false" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0" styleClass="slider">
+                    <items>
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="red-fill" />
+                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" styleClass="white-fill" />
+                    </items>
+                    <StackPane.margin>
+                        <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                    </StackPane.margin>
+                </SplitPane>
+                <ImageView fitHeight="420.0" fitWidth="370.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="50.0" AnchorPane.leftAnchor="50.0" AnchorPane.topAnchor="50.0">
+                    <image>
+                        <Image url="@../../../assets/hangman.png" />
+                    </image>
+                </ImageView>
+            </children>
+        </StackPane>
+        <Label fx:id="progressLabel" alignment="CENTER" contentDisplay="CENTER" prefHeight="140.0" prefWidth="271.0" styleClass="red-text" text="50%" textAlignment="CENTER" AnchorPane.bottomAnchor="280.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="0.0">
+         <font>
+            <Font size="36.0" />
+         </font>
+      </Label>
+    </children>
+</fx:root>
