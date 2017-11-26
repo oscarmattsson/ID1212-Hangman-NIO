@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="540.0" prefWidth="1050.0" styleClass="transparent" stylesheets="@../assets/style.css" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <AnchorPane layoutX="855.0" layoutY="-9.0" prefHeight="540.0" prefWidth="60.0" styleClass="black-fill" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="840.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <VBox prefHeight="540.0" prefWidth="60.0" spacing="10.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+               <padding>
+                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+               </padding>
+               <children>
+                  <ImageView fx:id="exitButton" fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true">
+                     <cursor>
+                        <Cursor fx:constant="HAND" />
+                     </cursor>
+                     <image>
+                        <Image url="@../assets/cross.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </VBox>
+         </children>
+      </AnchorPane>
+      <AnchorPane prefHeight="500.0" prefWidth="830.0" styleClass="black-fill" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="40.0">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="50.0" prefHeight="83.0" prefWidth="830.0" styleClass="white-text" text="HANGMAN" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+               <font>
+                  <Font size="56.0" />
+               </font>
+            </Label>
+            <Separator layoutX="315.0" layoutY="149.0" opacity="0.5" prefWidth="630.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="140.0" />
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="186.0" prefWidth="830.0" styleClass="grey-text" text="CONNECT TO SERVER" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <TextField alignment="CENTER" layoutX="303.0" layoutY="274.0" promptText="host" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="265.0">
+               <styleClass>
+                  <String fx:value="white-fill" />
+                  <String fx:value="black-text" />
+               </styleClass>
+            </TextField>
+            <TextField alignment="CENTER" layoutX="303.0" layoutY="347.0" promptText="port" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="345.0">
+               <styleClass>
+                  <String fx:value="white-fill" />
+                  <String fx:value="black-text" />
+               </styleClass>
+            </TextField>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="250.0" prefWidth="830.0" styleClass="green-text" text="HOST ADRESS" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" contentDisplay="CENTER" layoutY="327.0" prefWidth="830.0" styleClass="green-text" text="PORT NUMBER" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button layoutX="304.0" layoutY="400.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="224.0" text="CONNECT" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="400.0">
+               <styleClass>
+                  <String fx:value="green-fill" />
+                  <String fx:value="white-text" />
+               </styleClass>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="titlePane" prefHeight="40.0" prefWidth="830.0" styleClass="grey-fill" AnchorPane.bottomAnchor="500.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Label fx:id="title" layoutX="14.0" layoutY="7.0" styleClass="white-text" text="Title" textFill="WHITE" AnchorPane.bottomAnchor="7.0" AnchorPane.leftAnchor="14.0" AnchorPane.topAnchor="7.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <ImageView fitHeight="48.0" fitWidth="139.0" layoutX="900.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../assets/tooltip.png" />
+         </image></ImageView>
+   </children>
+</AnchorPane>

@@ -1,0 +1,48 @@
+.section {
+    -fx-background-color: #1B1B1E;
+}
+
+.black-text {
+    -fx-text-fill: #1B1B1E;
+}
+.black-fill {
+    -fx-background-color: #1B1B1E;
+}
+
+.green-text {
+    -fx-text-fill: #58a4b0;
+}
+.green-fill {
+    -fx-background-color: #58a4b0;
+}
+
+.red-text {
+    -fx-text-fill: #ED6A5A;
+}
+.red-fill {
+    -fx-background-color: #ED6A5A;
+}
+
+.grey-text {
+    -fx-text-fill: #373F51;
+}
+.grey-fill {
+    -fx-background-color: #373F51;
+}
+
+.white-text {
+    -fx-text-fill: #D8DBE2;
+}
+.white-fill {
+    -fx-background-color: #D8DBE2;
+}
+
+.transparent {
+    -fx-background-color: transparent;
+}
+.split-pane:vertical > * > .split-pane-divider {
+    -fx-border-color:  transparent;
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}

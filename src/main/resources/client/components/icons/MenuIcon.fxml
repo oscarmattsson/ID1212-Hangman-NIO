@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.*?>
+<?import java.lang.*?>
+<?import javafx.scene.image.*?>
+
+<fx:root fitHeight="40.0" fitWidth="40.0" pickOnBounds="true" preserveRatio="true" smooth="false" type="ImageView" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <cursor>
+        <Cursor fx:constant="HAND" />
+    </cursor>
+</fx:root>

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.web.*?>
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root prefHeight="500.0" prefWidth="830.0" styleClass="transparent" stylesheets="@../../../assets/style.css" type="AnchorPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="50.0" prefHeight="83.0" prefWidth="830.0" styleClass="white-text" text="HANGMAN" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="50.0">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Label>
+      <Separator layoutX="315.0" layoutY="149.0" opacity="0.5" prefWidth="630.0" AnchorPane.leftAnchor="100.0" AnchorPane.rightAnchor="100.0" AnchorPane.topAnchor="140.0" />
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="186.0" prefWidth="830.0" styleClass="grey-text" text="CONNECT TO SERVER" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="180.0">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="hostField" alignment="CENTER" layoutX="303.0" layoutY="274.0" promptText="host" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="265.0">
+         <styleClass>
+            <String fx:value="white-fill" />
+            <String fx:value="black-text" />
+         </styleClass>
+      </TextField>
+      <TextField fx:id="portField" alignment="CENTER" layoutX="303.0" layoutY="347.0" promptText="port" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="345.0">
+         <styleClass>
+            <String fx:value="white-fill" />
+            <String fx:value="black-text" />
+         </styleClass>
+      </TextField>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="250.0" prefWidth="830.0" styleClass="green-text" text="HOST ADRESS" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="240.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutY="327.0" prefWidth="830.0" styleClass="green-text" text="PORT NUMBER" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="320.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Button fx:id="connectButton" layoutX="304.0" layoutY="400.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="224.0" text="CONNECT" AnchorPane.leftAnchor="303.0" AnchorPane.rightAnchor="303.0" AnchorPane.topAnchor="400.0">
+         <styleClass>
+            <String fx:value="green-fill" />
+            <String fx:value="white-text" />
+         </styleClass>
+      </Button>
+   </children>
+</fx:root>

@@ -1,7 +1,7 @@
 Title: Hangman-NIO Game Transfer Protocol
 Author: Oscar Mattsson
 E-mail: oscarmat@kth.se
-Version: 1.0
+Version: 1.1
 
 This document describes the protocol used to communicate between CLIENT and
 SERVER in the Hangman-NIO game.
@@ -22,6 +22,7 @@ stated above.
         2.2.2 REPLY
         2.2.3 BROADCAST
         2.2.4 TERMINATE
+    2.3 Message ID
 3. States
     3.1 INIT
     3.2 NO_GAME
@@ -36,14 +37,13 @@ stated above.
 --- 1. Message ---
 Each message consists of two parts; the header, and the actual data. The header
 contains metadata such as how much data is being sent and what type of data is
-being sent. A separator of three hash signs "###" is used to separate header
+being sent. A separator of two hash signs "##" is used to separate header
 from data. The header is explained in detail in section 2.
   The data is a JSON-formatted string. The fields to be included depends on the
 message type and the action type. Action types are explained in detail in
 section 4.
-  A TERMINATE message is a special case which will ignore the data part if it
-exists, making it redundant. See section 2.2.4 for more information.
-    - BNF Syntax: <message> ::= <header> "###" <data>
+  Three hash signs "###" is used to note the end of a message.
+    - BNF Syntax: <message> ::= <header> "##" <data> "###"
 
 --- 2. HEADERS ---
 Each message starts with a header. The header consists of a sequence of fields,
@@ -67,43 +67,53 @@ whether or not the sender should expect a message in return.
 
 --- 2.2.1 REQUEST ---
     - Syntax:
-        LENGTH:<message-length>,TYPE:REQUEST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:REQUEST##{
             state: <state>,
             type: <action-type>[, msg: <action-message>]
-        }
+        }###
     - Description: A REQUEST message is sent by a CLIENT to request an operation
         on the SERVER. After the operation is complete, the SERVER should send a
         REPLY message back to the CLIENT.
 
 --- 2.2.2 REPLY ---
     - Syntax:
-        LENGTH:<message-length>,TYPE:REPLY###{
+        ID:<request-id>,LENGTH:<message-length>,TYPE:REPLY##{
             state: <state>,
             type: <action-type>,
             msg: <return-message>,
             status: { ok: <ok-status>[, msg: <error-message>] }
-        }
+        }###
     - Description: A REPLY message is sent by the SERVER in response to a
         REQUEST message from a CLIENT. This message does not require a response.
+        A REPLY message uses the same ID as the REQUEST message which triggered
+        the reply.
 
 --- 2.2.3 BROADCAST ---
     - Syntax:
-        LENGTH:<message-length>,TYPE:BROADCAST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:BROADCAST##{
             state: <state>,
             type: <action-type>,
             msg: <return-message>,
-        }
+        }###
     - Description: A BROADCAST message is sent by the SERVER to ALL CLIENTS
         connected to that SERVER. This message does not require a response.
 
 --- 2.2.4 TERMINATE ---
     - Syntax:
-        LENGTH:0,TYPE:TERMINATE###
+        ID:<message-id>,LENGTH:2,TYPE:TERMINATE##{}###
     - Description: A TERMINATE message is sent either from a CLIENT to the
         SERVER or from the SERVER to the CLIENT. The TERMINATE message indicates
         the SENDER is terminating their connection, and puts the connection in
         the ENDED state (see section 3.4). This message does not require a
         response, nor does it require any additional data to be sent with it.
+
+--- 2.3 Message ID ---
+The message ID should be unique for every message within a reasonable time span.
+The ID consists of alphanumeric characters.
+  A REPLY message uses the same ID as the REQUEST message it is replying to as
+it is part of a message sequence.
+    - Syntax: ID:<message-id>
+    - <message-id>: Unique identifier for the message.
 
 --- 3. States ---
 The lifecycle of the connection between a CLIENT and a SERVER has four
@@ -161,20 +171,21 @@ the session.
 INIT to NO_GAME.
     - States: INIT
     - Request Syntax:
-        LENGTH:<message-length>,TYPE:REQUEST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:REQUEST##{
             state:INIT,
             type: ALIAS,
             msg: { name: <String> }
-        }
+        }###
     - Reply Syntax:
-        LENGTH:<message-length>,TYPE:REPLY###{
+        ID:<request-id>,LENGTH:<message-length>,TYPE:REPLY##{
             type: (INIT|NO_GAME),
             msg: {
                 name: <String>,
                 score: <Integer>,
                 leaderboard: <Array>
             },
-            status: { ok: <Boolean>[, msg: <error-message>] }
+            status: { ok: <Boolean>[, msg: <error-message>]
+        }###
 
  --- 4.2 NEW_GAME ---
 The CLIENT sends a REQUEST message to the SERVER with the NEW_GAME action.
@@ -184,11 +195,12 @@ session in a REPLY message to the CLIENT.
 from NO_GAME to PLAYING.
     - States: NO_GAME, PLAYING
     - Request Syntax:
-        LENGTH:<message-length>,TYPE:REQUEST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:REQUEST##{
+            state: (NO_GAME|PLAYING)
             type: NEW_GAME
-        }
+        }###
     - Reply Syntax:
-        LENGTH:<message-length>,TYPE:REPLY###{
+        ID:<request-id>,LENGTH:<message-length>,TYPE:REPLY##{
             state: (NO_GAME|PLAYING),
             type: NEW_GAME,
             msg: {
@@ -199,7 +211,7 @@ from NO_GAME to PLAYING.
                 }
             },
             status: { ok: <Boolean>[, msg: <error-message>] }
-       }
+       }###
 
 --- 4.3 PLAY ---
 The CLIENT sends a REQUEST message to the SERVER with the PLAY action. This
@@ -209,22 +221,19 @@ session.
 is over and the state of the connection will move from PLAYING to NO_GAME.
     - States: PLAYING
     - Request Syntax:
-        LENGTH:<message-length>,TYPE:REQUEST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:REQUEST##{
             state: PLAYING,
             type: PLAY,
             msg: {
                 guess: <String>
             }
-        }
+        }###
     - Reply Syntax (game not over):
-        LENGTH:<message-length>,TYPE:REPLY###{
+        ID:<request-id>,LENGTH:<message-length>,TYPE:REPLY##{
             state: PLAYING,
             type: PLAY,
             msg: {
-                guess: {
-                    value: <String>,
-                    correct: <Boolean>
-                },
+                guesses: <Array>,
                 gamestate: {
                     failedAttempts: <Integer>,
                     maxAttempts: <Integer>,
@@ -232,9 +241,9 @@ is over and the state of the connection will move from PLAYING to NO_GAME.
                 }
             },
             status: { ok: <Boolean>[, msg: <error-message>] }
-        }
+        }###
     - Reply Syntax (game over):
-        LENGTH:<message-length>,TYPE:REPLY###{
+        ID:<request-id>,LENGTH:<message-length>,TYPE:REPLY##{
             state: NO_GAME,
             type: PLAY,
             msg: {
@@ -247,7 +256,7 @@ is over and the state of the connection will move from PLAYING to NO_GAME.
                 }
             },
             status: { ok: <Boolean>[, msg: <error-message>] }
-        }
+        }###
 
 --- 4.4 LEADERBOARD ---
 When a game is ended, that CLIENT's score is updated and so the leaderboard is
@@ -255,10 +264,10 @@ updated. When this happens, the SERVER should BROADCAST the updated leaderboard
 to all CLIENTs.
     - States: NO_GAME, PLAYING
     - Syntax:
-        LENGTH:<message-length>,TYPE:BROADCAST###{
+        ID:<message-id>,LENGTH:<message-length>,TYPE:BROADCAST##{
             state: (NO_GAME|PLAYING),
             type: LEADERBOARD,
             msg: {
                 leaderboard: <Array>
             }
-        }
+        }###

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   width="400mm"
+   height="100mm"
+   viewBox="0 0 400 100"
+   version="1.1"
+   id="svg2879"
+   inkscape:version="0.92.2 (5c3e80d, 2017-08-06)"
+   sodipodi:docname="tooltip.svg"
+   inkscape:export-filename="C:\Users\oscar\Documents\GitHub\Hangman-NIO\src\main\resources\assets\tooltip.png"
+   inkscape:export-xdpi="10.16"
+   inkscape:export-ydpi="10.16">
+  <defs
+     id="defs2873" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.24748737"
+     inkscape:cx="-764.79491"
+     inkscape:cy="-342.81247"
+     inkscape:document-units="mm"
+     inkscape:current-layer="layer1"
+     showgrid="false"
+     showguides="false"
+     inkscape:guide-bbox="true"
+     inkscape:window-width="2880"
+     inkscape:window-height="1541"
+     inkscape:window-x="-11"
+     inkscape:window-y="-11"
+     inkscape:window-maximized="1">
+    <sodipodi:guide
+       position="35.947751,50.113036"
+       orientation="0,1"
+       id="guide3424"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="22.183371,62.541069"
+       orientation="0,1"
+       id="guide3426"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="21.916101,35.012308"
+       orientation="0,1"
+       id="guide3428"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="15.902537,20.045214"
+       orientation="1,0"
+       id="guide3430"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="28.731474,100.09244"
+       orientation="0,1"
+       id="guide3432"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="49.845767,74.568198"
+       orientation="1,0"
+       id="guide3434"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="29.860119,88.72991"
+       orientation="1,0"
+       id="guide3440"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="44.979166,85.044642"
+       orientation="0,1"
+       id="guide3442"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-14.079613,15.024553"
+       orientation="0,1"
+       id="guide3444"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="399.89881,46.018601"
+       orientation="1,0"
+       id="guide3446"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="385.06324,42.333333"
+       orientation="1,0"
+       id="guide3448"
+       inkscape:locked="false" />
+    <sodipodi:guide
+       position="-0.094494047,75.311755"
+       orientation="1,0"
+       id="guide3450"
+       inkscape:locked="false" />
+  </sodipodi:namedview>
+  <metadata
+     id="metadata2876">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(0,-197)">
+    <path
+       style="fill:#58a4b0;fill-opacity:1;stroke:none;stroke-width:0.26458332px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="m -0.09449405,246.88696 15.99703105,-12.42803 0,-22.50357 13.957582,-15.0478 355.203121,0 14.83557,15.0478 0,70.02009 -14.83557,14.9692 -355.203121,0.33883 -13.957582,-15.30803 0,-19.98776 z"
+       id="path3438"
+       inkscape:connector-curvature="0"
+       sodipodi:nodetypes="cccccccccccc" />
+  </g>
+</svg>

@@ -7,35 +7,38 @@ package oscarmat.kth.id1212.common;
  */
 public class Protocol {
 
+    static final String MESSAGE_END = "###";
+
     // Header constants
-    static final String HEADER_SEPARATOR = "###";
+    static final String HEADER_SEPARATOR = "##";
     static final String FIELD_SEPARATOR = ",";
     static final String KEY_VALUE_SEPARATOR = ":";
 
     // JSON common fields identifiers
-    static final String STATE = "state";
-    static final String TYPE = "type";
-    static final String MSG = "msg";
-    static final String STATUS = "status";
-    static final String STATUS_OK = "ok";
-    static final String STATUS_MSG = "msg";
+    public static final String STATE = "state";
+    public static final String TYPE = "type";
+    public static final String MSG = "msg";
+    public static final String STATUS = "status";
+    public static final String STATUS_OK = "ok";
+    public static final String STATUS_MSG = "msg";
 
     // JSON msg field identifiers
-    static final String NAME = "name";
-    static final String SCORE = "score";
-    static final String LEADERBOARD = "leaderboard";
-    static final String GAMESTATE = "gamestate";
-    static final String GUESS = "guess";
-    static final String WIN = "win";
+    public static final String ALIAS = "name";
+    public static final String SCORE = "score";
+    public static final String LEADERBOARD = "leaderboard";
+    public static final String GAMESTATE = "gamestate";
+    public static final String GUESS = "guess";
+    public static final String GUESSES = "guesses";
+    public static final String WIN = "win";
 
     // JSON gamestate field identifiers
-    static final String GAMESTATE_FAILEDATTEMPTS = "failedAttempts";
-    static final String GAMESTATE_MAXATTEMPTS = "maxAttempts";
-    static final String GAMESTATE_WORDSTATE = "wordState";
+    public static final String GAMESTATE_FAILEDATTEMPTS = "failedAttempts";
+    public static final String GAMESTATE_MAXATTEMPTS = "maxAttempts";
+    public static final String GAMESTATE_WORDSTATE = "wordState";
 
     // JSON guess field identifiers
-    static final String GUESS_VALUE = "value";
-    static final String GUESS_CORRECT = "correct";
+    public static final String GUESS_VALUE = "value";
+    public static final String GUESS_CORRECT = "correct";
 
     /**
      * This class only contains constant static fields and does therefore not
@@ -48,7 +51,8 @@ public class Protocol {
      */
     enum Header {
         LENGTH,
-        TYPE
+        TYPE,
+        ID
     }
 
     /**
@@ -64,7 +68,7 @@ public class Protocol {
     /**
      * State of the connection between client and server.
      */
-    public enum ConnectionState {
+    public enum SessionState {
         INIT,
         NO_GAME,
         PLAYING,
@@ -77,7 +81,6 @@ public class Protocol {
     public enum Action {
         ALIAS,
         NEW_GAME,
-        PLAY,
-        TERMINATE
+        PLAY
     }
 }

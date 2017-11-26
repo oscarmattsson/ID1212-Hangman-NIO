@@ -34,11 +34,14 @@ class Logger {
         putMessage(senderName, message, ERROR);
     }
 
+    public void putMessage(String senderName, String message) {
+        putMessage(senderName, message, "INFO");
+    }
+
     /**
      * Print a message to the log.
      * @param senderName Name of the sender.
      * @param message Contents of the message.
-     * @param messageType Type of the message.
      */
     public void putMessage(String senderName, String message, String messageType) {
         String timeStamp = getTimeStamp();
